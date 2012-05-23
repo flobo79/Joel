@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/33/trunk/joel/web/sith/plugins
+END
+Example.library.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/33/trunk/joel/web/sith/plugins/Example.library.php
+END
+CoreTag.library.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/33/trunk/joel/web/sith/plugins/CoreTag.library.php
+END
+CoreI18n.library.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/33/trunk/joel/web/sith/plugins/CoreI18n.library.php
+END
+CoreHook.library.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/33/trunk/joel/web/sith/plugins/CoreHook.library.php
+END
+CoreFilter.library.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/33/trunk/joel/web/sith/plugins/CoreFilter.library.php
+END

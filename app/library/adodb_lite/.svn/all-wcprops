@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite
+END
+adodb-datadict.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-datadict.inc.php
+END
+adodb-perf-module.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-perf-module.inc.php
+END
+adodb-exceptions.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-exceptions.inc.php
+END
+adodb-xmlschema.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-xmlschema.inc.php
+END
+xmlschema.dtd
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/xmlschema.dtd
+END
+adodb-errorhandler.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-errorhandler.inc.php
+END
+adodb-error.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-error.inc.php
+END
+license.txt
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/license.txt
+END
+adodb-perf.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-perf.inc.php
+END
+adodb.config.php
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb.config.php
+END
+adodb-time.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-time.inc.php
+END
+tohtml.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/tohtml.inc.php
+END
+adodb-errorpear.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb-errorpear.inc.php
+END
+adodb.inc.php
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/adodb.inc.php
+END
+test_adodb_lite.php
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/test_adodb_lite.php
+END

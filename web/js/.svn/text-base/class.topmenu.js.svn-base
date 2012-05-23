@@ -1,0 +1,30 @@
+
+var Topmenu = new Class({
+	name:'topmenu',
+	
+	initialize:function() {
+		this.div = new Element('div',{id:'topmenu',styles:{display:'block',opacity:0}}).inject($(document.body),'top');
+	},
+	
+	display:function () {
+		var html = '<div style="font-weight:bold;" id="projecttitle">'+PROJECT_TITLE+"</div><div> | </div>";
+	
+		if(j.user.user_id != false) {
+			html += '<div id="username" onclick="j.user.edit()">'+j.user.u_name+'</div>';
+			html += ' <div id="bu_logout" onclick="j.user.logout_show()"> | logout</div>';
+		
+		} else {
+			html += '<div >login</div> ';
+		}
+		
+		this.div.innerHTML = html;
+		j.BC.broadcastMessage('topmenu.show');
+		this.div.fade('in');
+	},
+	
+	events:function(type, param) {
+		if (type === 'user.updated' || type === 'user.login' || type == 'joel.start') {
+			this.display();
+		}
+	}
+});

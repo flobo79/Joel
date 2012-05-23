@@ -1,0 +1,10 @@
+#report_content {
+	display: none;
+	font-size:10px;
+	height:89px;
+	overflow:auto;
+}
+#report_content_open {
+	color: #3E9CD7;
+	cursor: pointer;
+}

@@ -1,0 +1,812 @@
+/**
+*  	JOEL - painless task tracking
+*  	http://code.google.com/p/joel
+*  
+*  	@author Florian Bosselmann <bosselmann@gmail.com>
+*  
+*/
+//var	tasksselected = [];
+/*
+ * 
+var	lastField = false;
+
+var project = 'summary';					// initial project after login
+var projects = false;						// projects object
+var tasklist = {};							// tasklist object
+var j = false;
+var currentTask = false;
+var currentProject = false;
+var currentRow = false;						
+var currentField = false;					
+var lastTask = false;						// previously selected Task
+var plugins = [];							// container for plugin classes
+var clipboard = false;						// clipboard object
+var user = false;							// container for user details
+var templates = false;						// container for template html source
+var keysdown = [];  						// container for pressed keys
+var updateFieldInt = false;					// field update interval
+var keyEvent = {};							// global object for last key event
+var BC = false;
+
+var api = 'api.php';						// URL zum API
+var controlkey = Browser.Platform.mac ? 	// assign the apple key as control equivalent
+	'meta' : 'control';
+*/
+
+
+// global namespace
+j = false;	// 
+DOM = window.DOM || {};
+
+function bootstrap() {
+	j = new Joel();
+	j.bootstrap();
+}
+window.addEvent('domready', bootstrap);
+
+
+document.addEvents({
+	focus: function(){
+		keysdown = [];
+	},
+	blur: function(){
+		keysdown = [];
+	}
+});
+
+
+
+/*
+function newTaskShortcut (event) {
+	if(project && currentTask) {
+		var event = new Event(event);
+		event[controlkey] = false; // set key to false to not select both old and new row
+		newTask(currentTask.task_id, function(newtask) {
+			var newField = $(newtask.task_id+'_t_description');
+			selectField(newField, event);
+		});
+	}
+}
+
+
+
+/*
+var Shortcuts = new Class({
+	collection:{},
+	
+	initialize:function () {
+		this.collection = new Shortcut();
+		this.collection.add('esc', function() { BC.broadcastMessage('key.escape'); });
+		
+		BC.addListener(this);
+	},
+	
+	events:function(fnc, param) {
+		if(fnc == 'tasklist.draw') {
+			
+			// defining shortcuts
+			var target_tasklist = {target:'tasklist'};
+			
+			this.collection.add(controlkey+'+shift+d', task_insert_date , target_tasklist);
+			this.collection.add(controlkey+'+shift+x', tasklist_cut , target_tasklist);
+			this.collection.add(controlkey+'+shift+c', tasklist_copy, target_tasklist);
+			this.collection.add(controlkey+'+n', newTaskShortcut, target_tasklist);
+			this.collection.add(controlkey+'+backspace', tasklist_delete, target_tasklist);
+			this.collection.add(controlkey+'+shift+v',tasklist_paste, target_tasklist);
+			this.collection.add(controlkey+'+shift+up',tasklist_5_plus, target_tasklist);
+			this.collection.add(controlkey+'+shift+down',tasklist_5_minus, target_tasklist);
+			this.collection.add(controlkey+'+shift+i',tasklist_prio_up, target_tasklist);
+			this.collection.add(controlkey+'+shift+h',changeTask, target_tasklist);
+			this.collection.add('return', newTaskShortcut, target_tasklist);
+			
+			this.collection.add('insert',function (event) { if(currentTask.task_id) { 
+				newTask(currentTask.task_id);
+			}},target_tasklist);
+			
+			this.collection.add('up',function (event) {
+				if(nil(tasklist[currentTask.index-1])) {
+					selectField($(tasklist[currentTask.index-1].task_id+currentFieldName), new Event(event));
+				}
+			},target_tasklist);
+			
+			this.collection.add(controlkey+'+up',function (event) {
+				if(nil(tasklist[currentTask.index-1])) {
+					selectField($(tasklist[currentTask.index-1].task_id+currentFieldName), new Event(event));
+				}
+			},target_tasklist);
+			
+			this.collection.add('down',function (event) {
+				if(nil(tasklist[currentTask.index-1])) {
+					selectField($(tasklist[currentTask.index+1].task_id+currentFieldName), new Event(event));
+				}
+			},target_tasklist);
+			this.collection.add(controlkey+'+down',function (event) {
+				if(nil(tasklist[currentTask.index-1])) {
+					selectField($(tasklist[currentTask.index+1].task_id+currentFieldName), new Event(event));
+				}
+			},target_tasklist);
+			
+		} else if(fnc == 'joel.logout') {
+			this.collection.detachAll();
+		}
+	}
+});
+*/
+
+/*
+function field_onChange (element) {
+	var test = RegExp("\n");
+	if (test.exec(currentField.value)) {
+		var win = new Modal('');
+		var pieces = element.value.split('\n');
+		var insertafterid = currentTask.task_id;
+		var index = currentTask.index;
+		var newElements = [];
+		
+		// put first row into currentField
+		element.value = pieces.splice(0, 1);
+		
+		// send rest to the server
+		j.request('task_create_bulk', {
+			'block': pieces,
+			'insertafterid': currentTask.task_id
+		}, function(response){
+			JSON.decode(response).each(function(e){
+				var nr = newTaskRow(e);
+				nr = nr.inject('row_' + insertafterid, 'after');
+				newElements.push(nr);
+				
+				e.index = index;
+				e.row = nr;
+				tasklist.splice(index, 0, e);
+				
+				insertafterid = e.task_id;
+				index += 1;
+			});
+			
+			tasklist.each(function(e,i) { tasklist[i].index=i; });
+			mySortables.addItems(newElements);
+			win.close();
+		});
+	}
+}
+
+function newTask(insertafterid, callback, fields) {
+	var packet = {};
+	if ($type(fields) == 'object') { packet = fields; }
+	packet.insertafterid = insertafterid;
+	
+	var myrequest = j.request('task_create', packet, function result(obj) {
+		var rowdata = JSON.decode(obj);
+		insertTaskRow(insertafterid, rowdata, callback);
+	});
+}
+
+function insertTaskRow(at, rowdata, callback, position) {
+	position = nil(position) ? position : 'after';
+	if(nil(at)) {
+		var at = $t(at);
+		rowdata.row = newTaskRow(rowdata);
+		rowdata.row.inject('row_'+at.task_id, position);
+		rowdata.index = position == 'before' ? at.index : at.index+1;
+		tasklist.splice(rowdata.index, 0, rowdata);
+		tasklist.each(function(e,i) { tasklist[i].index=i;});
+	} else {
+		rowdata.index = tasklist.length-1;
+		rowdata.row = newTaskRow(rowdata);
+		tasklist.push(rowdata);
+		rowdata.row.inject('tasklist_list');
+	}
+	
+	mySortables.addItems(rowdata.row);
+	if($type(callback) == 'function') { callback(rowdata); }
+	BC.broadcastMessage("_newTask", rowdata);
+}
+
+function newTaskRow(data) {
+	var rowdata = data;
+	rowdata._MODIFIERS = {
+		s2h:s2h,
+		drawPrio:drawPrio,
+		htmlentities:htmlentities
+	};
+	
+	rowdata.asNode = true;
+	
+	return new Element('div',{
+		'id':'row_'+rowdata.task_id,
+		'class':['t_row',(rowdata.t_feature !== '' ? ' block':''),
+						(rowdata.t_description==='' ? ' empty' : ''),
+						(rowdata.t_currest != 0 && rowdata.t_remain == 0 ? ' ready':''),
+						(user.u_working_on == rowdata.task_id ? ' counting':'')].join(''),
+		'html': templates.tasklist_entry.process(rowdata),
+		
+		'events':{
+			'mouseover': function () { this.addClass('hover'); },
+			'mouseout': function () { this.removeClass('hover'); }
+		}
+	});
+}
+
+function changeTask() {
+	if(currentTask.t_feature !== '') {
+		$(currentTask.task_id+'_t_description').value = $(currentTask.task_id+'_t_feature').value;
+		$(currentTask.task_id+'_t_feature').value = '';
+		currentRow.removeClass('block');
+		
+	} else {
+		$(currentTask.task_id+'_t_feature').value = $(currentTask.task_id+'_t_description').value;
+		$(currentTask.task_id+'_t_description').value = '';
+		currentRow.addClass('block').removeClass('empty');
+		
+	}
+	updateField($(currentTask.task_id+'_t_feature'));
+	updateField($(currentTask.task_id+'_t_description'));
+}
+
+
+/**
+ * loads projects from server
+ */
+/*
+function getProjects () {
+	if(nil(user.user_id)) {
+		j.request('getProjects','',function (res) {
+			projects = JSON.decode(res);
+			BC.broadcastMessage('joel.getProjects');
+		});
+	} else {
+		user.logout();
+	}
+}
+
+
+/**
+ * loads all javascript templates from server
+ */
+/*
+function getTemplates() {
+	alert("method depricated, use template.load() instead, Joel.js:388");
+	j.request('getTemplates','',function (obj, str) {
+		templates = [];
+		
+		var parts = obj.split('##!##');
+		parts.each(function(e) {
+			var thistemp = e.split('#!#');
+			templates[thistemp[0]] = thistemp[1];
+		});
+		
+		BC.broadcastMessage('joel.getTemplates');
+	});
+}
+
+
+/**
+ * loads userdata from server
+ */
+/*
+function getUserdata () {
+	j.request('User_getdata','',function (response) { 
+		var result = JSON.decode(response);
+		if(typeof result == 'object') {
+			//user.extend(result);
+		}
+		
+		//BC.broadcastMessage('joel.getUserdata');
+	});
+}
+
+function hoverin(obj) {
+	$(obj.id).addClass('hover');
+}
+
+function hoverout(obj) {
+	$(obj.id).removeClass('hover');
+}
+
+
+function tasklist_init() {
+
+}
+
+function tasklist_updateSummary() {
+	// variables for summary
+	var total_elapsed = 0;
+	var total_current = 0;
+	var total_original = 0;
+	var total_remain = 0;
+	
+	// block variables
+	var block_origest = 0;
+	var block_currest = 0;
+	var block_elapsed = 0;
+	var block_remain = 0;
+	
+	// current block id
+	var last_block = 0;
+	
+	tasklist.each(function(e,i) {
+		if (e.t_feature === '') {
+			// if normal entry
+			total_elapsed += Number(e.t_elapsed);
+			total_current += Number(e.t_currest);
+			total_original += Number(e.t_origest);
+			total_remain += Number(e.t_remain);
+	
+			if(last_block) {
+				block_origest += Number(e.t_origest);
+				block_currest += Number(e.t_currest);
+				block_elapsed += Number(e.t_elapsed);
+				block_remain += Number(e.t_remain);
+			}
+	
+		// neuer Summary Block gefunden
+		} else {
+			// if still counting for a block
+			if (last_block) {
+				$(last_block+'_t_origest').value = s2h(block_origest);
+				$(last_block+'_t_currest').value = s2h(block_currest);
+				$(last_block+'_t_elapsed').value = s2h(block_elapsed);
+				$(last_block+'_t_remain').innerHTML = s2h(block_remain);
+				
+				// reset block counter
+				block_origest = 0;
+				block_currest = 0;
+				block_elapsed = 0;
+				block_remain = 0;
+			}
+			
+			// merke id des letzten blocks
+			last_block = e.task_id;
+			last_block_index = i;
+		}
+	});
+	
+	
+	
+	// nach ende der Liste, wenn es einen Block gegeben hat,
+	// schreibe Block header
+	if (last_block) {
+		$(last_block+'_t_origest').value = s2h(block_origest);
+		$(last_block+'_t_currest').value = s2h(block_currest);
+		$(last_block+'_t_elapsed').value = s2h(block_elapsed);
+		$(last_block+'_t_remain').innerHTML = s2h(block_remain);
+	}
+	
+	// if project is in the tablist and total changed, update
+	// percentage in the tab
+	
+	
+	// write total summary into head of list	
+	$('summary_origest').innerHTML = s2h(total_original);
+	$('summary_currest').innerHTML = s2h(total_current);
+	$('summary_elapsed').innerHTML = s2h(total_elapsed);	
+	$('summary_remain').innerHTML = s2h(total_remain);
+	
+	BC.broadcastMessage('_updateSummary');
+}
+
+/** 
+ * this method is called by pressing ctrl-+ and adds
+ * 5 extra minutes to the done field
+ */
+/*
+function tasklist_5_plus() {
+	if (nil(currentTask.task_id)) {
+		$(currentTask.task_id+'_t_elapsed').value = s2h(h2s($(currentTask.task_id+'_t_elapsed').value)+300);
+		updateField($(currentTask.task_id+'_t_elapsed'));
+	}
+}
+
+
+
+/** 
+ * this method is called by pressing ctrl-- and removes
+ * 5 minutes from the done field
+ */
+/*
+function tasklist_5_minus() {
+	if (nil(currentTask.task_id) && currentTask.t_elapsed > 300) {
+		$(currentTask.task_id+'_t_elapsed').value = s2h(h2s($(currentTask.task_id+'_t_elapsed').value)-300);
+		updateField($(currentTask.task_id+'_t_elapsed'));
+	}
+}
+
+function tasklist_delRow(id) {
+	var item = $t(id);
+	var cb = clipboard.fetch('tasks');
+	
+	if(nil(item)) {
+		item.row.dispose();
+		tasklist.splice(item.index,1);
+		tasklist.each(function(e,i) { tasklist[i].index=i; });
+		tasklist_updateSummary();
+		
+		// check clipboard
+		if($type(cb) == 'array' && cb.contains(id)) {
+			cb.erase(id);
+			clipboard.add('tasks',cb);
+		}
+	}
+}
+
+function tasklist_copy() {
+	if(tasksselected.length !== 0) {
+		// unset cut action
+		$$('.cutted').removeClass('cutted');
+		clipboard.add('tasks',tasksselected);
+		clipboard.add('taskscut',false);
+		
+		$('cm_paste').removeClass('inactive');
+	}
+}
+
+function tasklist_cut(event) {
+	if(tasksselected.length !== 0) {
+		tasklist_copy();
+		$$('.selected').addClass('cutted');
+		clipboard.add('taskscut',true);
+	}
+}
+
+function tasklist_paste() {
+	
+	var tasks = clipboard.fetch('tasks');
+	var cut = clipboard.fetch('taskscut',1);
+	
+	if (tasks && tasks.length !== 0) {
+		var packet = {
+			'insertafterid': currentTask.task_id,
+			'delete': cut,
+			'tasks': tasks,
+			'toproject': project
+		};
+		
+		if (cut) { 
+			clipboard.remove('tasks');
+			tasks.each(function(e) { tasklist_delRow(e); });
+		}
+		
+		$('cm_paste').addClass('inactive');
+		
+		j.request('tasklist_copyTasks',packet,function (obj) {
+			var after = nil(tasklist[currentTask.index-1]) ? 1 : 0;
+			var position = currentTask.task_id;
+			var list = JSON.decode(obj);
+			
+			$A(list).each(function(e) { insertTaskRow(currentTask.task_id, e, false, 'before'); });
+		});
+	}
+	return false;
+}
+
+function tasklist_prio_up() {
+	var setprio = currentTask.t_prio < 4 ? Number(currentTask.t_prio)+Number(1) : 0;
+	setPrio($(setprio+'_'+currentTask.task_id));
+}
+
+function tasklist_delete() {
+	if(confirm('delete selected tasks?')) {
+		if(typeof updateFieldInt != "undefined") { clearTimeout(updateFieldInt); }
+		tasksselected.each(function(e) { tasklist_delRow(e); });
+		
+		j.request('tasklist_delete',{'delids':tasksselected});
+		lastTask = false;		// unset last task
+		tasksselected = [];		// empty selected list
+		keysdown = [];			// the confirm dialog blocks the keyup event
+		
+		tasklist.each(function(e,i) { tasklist[i].index = i; });
+	}
+}
+
+function updateTask(task, field, value, modifier) {
+	if(task.task_id == currentTask.task_id) { currentTask[field] = value; }
+	
+	if(nil(tasklist[task.index])) {
+		tasklist[task.index][field] = value;
+		var htmlValue = $type(modifier) == "function" ? modifier(value) : value;
+		if(nil($(task.task_id+'_'+field).value)) {
+			$(task.task_id+'_'+field).value = htmlValue;
+		} else {
+			$(task.task_id+'_'+field).innerHTML = htmlValue;
+		}
+	}
+}
+
+
+function updateContextMenu() {
+	if(tasksselected.length != 0) {
+		$('cm_copy').removeClass('inactive').onclick=tasklist_copy;
+		$('cm_delete').removeClass('inactive').onclick=tasklist_delete;
+		$('cm_cut').removeClass('inactive').onclick=tasklist_cut;
+	} else {
+		$('cm_copy').addClass('inactive').onclick=function() {};
+		$('cm_delete').addClass('inactive').onclick=function() {};
+		$('cm_cut').addClass('inactive').onclick=function() {};
+	}
+	
+	if(clipboard.fetch('tasks')) {
+		$('cm_paste').removeClass('inactive').onclick=tasklist_paste;
+	} else {
+		$('cm_paste').addClass('inactive').onclick=function() {};
+	}
+}
+
+/**
+ * Converts : and , to . from a hour string and returns a number value.
+ * 
+ * @param number
+ */
+/*
+function castNumber (number) {
+	// if the number contains a . assume that it is a hour
+	if (String(number).indexOf(':') != -1) { number = number.split(':').join('.'); }
+	if (String(number).indexOf(',') != -1) { number = number.split(',').join('.'); }
+	
+	return isNaN(number) ? 0 : Number(number);
+}
+
+/**
+ * converts hours into seconds
+ * 
+ * @param {Number} hours
+ */
+/*
+function h2s (h) {
+	h = castNumber(h);
+	var s = Number(Math.round((h - Math.floor(h))*100) * 60) + Number(Math.floor(h)*3600);
+	return s;
+}
+
+/**
+ * converts seconds into hours
+ * 
+ * @param {Number} seconds
+ */
+/*
+function s2h (sec) {	
+	return ((Math.floor(sec/3600))+":"+ pad(Math.floor((sec%3600)/60)));
+}
+
+function pad(num){
+	num=num+"";
+	if(num.length==1){
+	   num="0" + num;
+	}
+	return num;   
+}
+
+function setPrio(row){
+	var obj = row.id.split("_");
+	var id = obj[1];
+	var prio = obj[0];
+	var i;
+	
+	var task = $t(id);
+	tasklist[task.index].t_prio = prio;
+	if (id == currentTask.task_id) { currentTask.t_prio = prio; }
+	
+	var prioHTML = '<div id="0_'+id+'" onclick="setPrio(this)"></div>';
+	for(i=1;i<5;i++) {
+		prioHTML += ['<div class="',(i<=prio?'star':'dot'),'" id="',i,'_',id,'" onclick="setPrio(this);"></div>'].join('');
+	}
+
+	$(id+'_t_prio').innerHTML = prioHTML;
+	j.request('task_updateField',{'task_id':id,'field':'t_prio','value':prio});
+}
+
+function drawPrio (id, prio) {
+	var prioHTML = ['<div id="0_',id,'" onclick="setPrio(this)"></div>'];
+	for(var i=1;i<5;i++) {
+		prioHTML.push('<div class="',(i<=prio?'star':'dot'),'" id="',i,'_',id,'" onclick="setPrio(this);"></div>');
+	}
+	return prioHTML.join('');
+}
+
+
+/**
+ * Selects a project by submitting the project reference id or 
+ * the key Strings "new" oder "summary". Selecting a project calls the Server method
+ * "project_select" in Class "project" and passes the project id via parameter "project".
+ * After using this funktion the Parameter "project" is globally available.
+ * 
+ * If the second Parameter "taskID" is set, the secified task will be selected after loading
+ * the Project
+ * 
+ * @param projectID
+ * @param taskID - optional
+ * 
+ */
+/*
+function project_select (projectID, selTask) {	
+	if(projectID === undefined) {
+		projectID = "summary";
+	}
+	
+	// reset task related keys and actions
+	tasksselected = [];
+	keysdown = [];
+	currentId = false;
+	currentTask=false;
+	currentRow = false;
+	lastField = false;
+	currentField = false;
+	
+	// set global project ID
+	project = projectID;
+	
+	if(project === 'summary') {
+		summary.show();
+	
+	} else if(project === 'new') {
+		newProject();
+		
+	} else {
+		// bookmark project
+		projects.each(function(e,i) {
+			if(e['project_id'] == projectID) {
+				currentProject = e;
+				currentProject.index = i;
+				projects[i].bookmarked = 1;
+			}
+		});
+		BC.broadcastMessage('project.select', projectID);
+		
+		// setup HTML
+		$('contentbox').innerHTML = templates.tasktable;
+		$('tasklist_list').innerHTML = '<div id="loading_status" style="margin:5px;">Loading ...</div>';
+		//$('tasklist').setStyles({display:'none'});
+		$('tasklist_top').style.display = 'block';
+			
+		BC.broadcastMessage('tasklist.load');
+		
+		// loadTasklist
+		j.request ('getTasklist', {'project':project}, function (res) {
+			tasklist = JSON.decode(res);
+			
+			var newlist = new Element('div',{id:'tasklist_list'});
+			tasklist.each(function(e,i){
+				tasklist[i].index = e.index = i;
+				newlist.adopt(tasklist[i].row = newTaskRow(e));	
+			});
+			
+			//this has to be here to enable tabbing through fields 
+			//rather than clicking into them to enable update field on blur
+			newlist.getElements('textarea,input').each(function(e){
+				e.addEvents({'blur':function(ev) { updateField(this, ev);},
+							'focus':function(ev) { selectField(this, ev);}});
+			});
+			
+			
+			newlist.addEvent('mousedown', function(ev) {
+				if(ev.target.nodeName=='INPUT' || ev.target.nodeName=='TEXTAREA') {
+					selectField(ev.target, ev);
+					//updateContextMenu();
+				}
+			});
+			
+			newlist.replaces($('tasklist_list'));
+			
+			if (nil(selTask)) {
+				task_select(selTask);
+				
+			} else if(user.u_working_project == project && user.u_working_on) {
+				task_select(user.u_working_on);
+				if (currentRow) {
+					currentRow.addClass('counting');
+				}
+			}
+			
+			// calculate summaray
+			tasklist_updateSummary();
+			
+			mySortables = new Sortables('tasklist_list', {
+				onStart:function() {
+					this.oldorder = (mySortables.serialize(1,function(element, index) {
+				    	return element.id.replace('row_','');
+					}).join(','));
+				},
+				handle:'.sort',
+				onSort:function () {
+					(mySortables.serialize(1, function(e, i) {
+						var id = e.id.substr(4);
+						if(id == currentId) {
+							tasklist.splice(currentTask.index,1);
+							currentTask.index = i;
+							tasklist.splice(i,0,currentTask);
+							tasklist_updateSummary();
+						}
+				    	return id;
+					}));
+				},
+				
+				onComplete:function (foo) {
+					var newIndex = 0;
+					var newOrder = (mySortables.serialize(1, function(e, i) {
+						var id = e.id.substr(4);
+						if(id == currentId) {
+							tasklist.splice(currentTask.index,1);
+							currentTask.index = i;
+							tasklist.splice(i, 0, currentTask);
+							
+							tasklist_updateSummary();
+						}
+				    	return id;
+					}));
+					
+					if(newOrder != this.oldorder) {	
+							j.request('tasklist_updateOrder',{'order':newOrder.join(',')});
+					}
+					
+					tasklist.each(function(e,i) { tasklist[i].index=i;});
+				}
+			});
+			
+			$('tasklist').setStyles({'opacity': 1, display:'block'});
+			
+			if($('tasklist_list').getScroll().y) {
+				alert("hier");
+			}
+			
+			BC.broadcastMessage('tasklist.draw');
+		}); 
+	}
+	
+}
+
+function task_insert_date(){
+	if (currentTask) {
+		
+		if (typeof tmp_task_time === 'undefined') {
+			tmp_task_time = 1;
+			tmp_task_description = $(currentTask.task_id + "_t_description").value;
+		} else {
+			tmp_task_time = tmp_task_time < 3 ? tmp_task_time+1 : 1;
+		}
+		
+		if (typeof tmp_task_int !== 'undefined') { clearTimeout(tmp_task_int); } 
+		tmp_task_int = setTimeout(function() { 
+			clearTimeout("tmp_task_int"); 
+			delete tmp_task_time;
+			delete tmp_task_description;
+			delete tmp_task_int;
+		},800);
+		
+		var date = new Date();
+		var str_date = "";
+		
+		switch(tmp_task_time) {
+			case 1:
+				str_date = date.getDate() + "." + (Number(date.getMonth())+1) + "." + date.getFullYear();
+				break;
+			case 2:
+				str_date = date.getHours() + ":" + date.getMinutes();
+				break;
+			case 3:
+				str_date = date.getDate() + "." + (Number(date.getMonth())+1) + "." + date.getFullYear()+" "+date.getHours() + ":" + date.getMinutes();
+				break;
+		}
+		
+		utils.input.insertAtCursor(currentField, str_date+' ');
+		updateTask(currentTask, 't_description',  currentField.value);
+	}
+	
+	
+}
+
+function task_setReady (e) {
+	var taskid = e.id.substr(3);
+	task_select(taskid);
+	
+	if(currentTask.t_elapsed === 0) {
+		updateTask(currentTask, 't_elapsed', (currentTask.t_currest > 61 ? currentTask.t_currest : 61), s2h);
+		updateField($(taskid+'_t_elapsed'));
+	}
+	
+	$(taskid+'_t_currest').value = s2h(currentTask.t_elapsed);
+	updateField($(taskid+'_t_currest'));
+	
+	tasklist_updateSummary();
+}
+
+*/

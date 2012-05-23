@@ -1,0 +1,35 @@
+
+<div id="tasklist" >
+	<div id="tasklist_top">
+		<div id="tasklist_head" class="t_row">
+			<div class="c0">&nbsp;</div>
+			<div class="c1">&nbsp;</div>
+			<div class="c2">&nbsp;</div>
+			<div class="tl_right">
+				<div class="c3">prio</div>
+				<div class="c4">orig.</div>
+				<div class="c5">curr.</div>
+				<div class="c6">done</div>
+				<div class="c7">remain</div>
+				<div class="c10">&nbsp;</div>
+			</div>
+		</div>
+		<div id="tasklist_summary" class="t_row">
+			<div class="c0">&nbsp;</div>
+			<div class="c1">Summary:</div>
+			<div  class="tl_right">
+				<div class="c3" id="summary_prio">&nbsp;</div>
+				<div class="c4" id="summary_origest">&nbsp;</div>
+				<div class="c5" id="summary_currest">&nbsp;</div>
+				<div class="c6" id="summary_elapsed">&nbsp;</div>
+				<div class="c7" id="summary_remain">&nbsp;</div>
+				<div class="c10">&nbsp;</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="tasklist_list">
+		<div class="content_loading"><div id="loading_status">loading tasklist...</div></div>
+	</div>
+</div>
+

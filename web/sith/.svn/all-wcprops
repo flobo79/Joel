@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/33/trunk/joel/web/sith
+END
+IO.php
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/33/trunk/joel/web/sith/IO.php
+END
+Interfaces.php
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/33/trunk/joel/web/sith/Interfaces.php
+END
+Library.php
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/33/trunk/joel/web/sith/Library.php
+END
+Manager.php
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/33/trunk/joel/web/sith/Manager.php
+END
+LibraryLoader.php
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/33/trunk/joel/web/sith/LibraryLoader.php
+END
+Compiler.php
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/33/trunk/joel/web/sith/Compiler.php
+END
+Base.php
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/33/trunk/joel/web/sith/Base.php
+END
+Utils.php
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/33/trunk/joel/web/sith/Utils.php
+END
+Exceptions.php
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/33/trunk/joel/web/sith/Exceptions.php
+END
+SithTemplate.php
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/33/trunk/joel/web/sith/SithTemplate.php
+END

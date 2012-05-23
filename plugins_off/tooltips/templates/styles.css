@@ -1,0 +1,5 @@
+  .tip            { font-size:11px; max-width:200px; background:#007bd1; z-index:100; }  
+  .tip-top        { height:5px; width:100%; }  
+  .tip-title      { color:#FFF; font-weight:bold; padding:3px; }  
+  .tip-text       { color:#FFF; padding:3px; }  
+  .tip-bottom     { width:100%; height:5px; }  

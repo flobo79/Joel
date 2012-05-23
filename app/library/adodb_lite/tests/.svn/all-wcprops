@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/tests
+END
+xmlschema.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/tests/xmlschema.xml
+END
+test_adodb_lite_sessions.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/tests/test_adodb_lite_sessions.php
+END
+test_datadictionary.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/tests/test_datadictionary.php
+END
+adodblite_thumb.jpg
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/tests/adodblite_thumb.jpg
+END
+pj
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/tests/pj
+END
+test_adodb_lite.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/tests/test_adodb_lite.php
+END

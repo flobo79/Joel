@@ -1,0 +1,63 @@
+<?php
+
+
+class ClientController extends BaseController {
+	
+	function __construct() {
+		//__construct();
+		
+	}
+	
+	/**
+	 * reads javascript template files marked by a leading "js_",
+	 * packs them into a delimiter separated string and returns it
+	 * to the client. Then reads all templates from all plugins.
+	 * 
+	 * @return html code of templates with #!# as delimiter
+	 * @access 
+	 * @package Joel
+	 */
+	 function getTemplates() {
+		$return = "";
+		$cachefile = 'templates_'.($_SESSION['joel']->user->u_locale).'.tpl';
+		$cache = new FilecacheController();
+		
+		if(!DEV && $cache->exists($cachefile)) {
+			echo $cache->getFileContents($cachefile);
+		
+		} else {
+			$dir_templates = CLIENT_BASEDIR.'/skins/'.SKIN."/templates";
+			$d = dir($dir_templates);
+			while($entry=$d->read()) {
+				if(preg_match("/^js_+/",$entry)) {
+					$return .= substr($entry,3,strpos($entry,'.')-3)."#!#".file_get_contents($dir_templates."/".$entry)."##!##";
+				}
+			}
+			
+			// now load plugin templates
+			$list = $_SESSION['joel']->pluginslist;
+			foreach($list as $plugin) {
+				$dir = BASEDIR."/plugins/".$plugin."/templates";
+				if(is_dir($dir)) {
+					$d = dir($dir);
+				
+					while($entry=$d->read()) {
+						if(preg_match("/html$/",$entry)) {
+							$return .= $plugin."_".substr($entry,0,-5)."#!#".file_get_contents($dir."/".$entry)."##!##";
+						}
+					}
+				}
+			}
+			
+			$L = new Locale();
+			$return = $L->translateText($return);
+			
+			$cache->writeFile($cachefile, $return);
+
+			echo $return;
+		}
+	}
+}
+
+
+?>

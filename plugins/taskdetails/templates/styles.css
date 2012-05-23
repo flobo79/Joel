@@ -1,0 +1,53 @@
+.detailed .c2 {
+	
+}
+
+#task_detailsbox {
+	clear:both;
+	height:75px;
+	margin-left:20px;
+}
+
+.details_files {
+	margin-top:4px;
+	width:220px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	height:75px;
+}
+
+.details_fileslist {
+	width:100%;
+}
+
+.details_fileslist .file{
+	width:100%;
+	overflow:hidden;
+}
+
+.details_fileslist .del {
+	background-image:url(gfx/bu_del_sm.gif);
+	width:17px;
+	height:16px;
+	float:right;
+	cursor:pointer;
+	margin-top:4px;
+}
+
+.taskdetails_file {
+	float:left;
+	width:16px;
+	height:16px;
+	margin-right:3px;
+	background-attachment:fixed;
+	background:url(gfx/filetypes.gif) no-repeat scroll -206px -70px;
+}
+.taskdetails_file.zip {
+	background:url(gfx/filetypes.gif) no-repeat scroll -205px -161px;
+}
+.taskdetails_file.jpg, .taskdetails_file.gif, .taskdetails_file.png, .taskdetails_file.bmp {
+	background:url(gfx/filetypes.gif) no-repeat scroll -82px -140px;
+}
+.taskdetails_file.pdf {
+	background:url(gfx/filetypes.gif) no-repeat scroll -206px -2px;
+}

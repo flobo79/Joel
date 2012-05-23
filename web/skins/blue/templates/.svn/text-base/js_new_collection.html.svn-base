@@ -1,0 +1,4 @@
+<div>Please enter a Name for the new Timesheet Collection:</div>
+<input type="text" name="new_c_name" value="" id="new_c_name" style="font-size:14px; width:200px; border:1px solid #CCCCCC; " /><br /> <br />
+<div id="newcollection_submit" class="button">create </div> <div class="button" style="float:left;" onclick="BC.broadcastMessage('_close_modal');">cancel </div>
+<div id="response" style="clear:both; margin-top:10px;"></div>

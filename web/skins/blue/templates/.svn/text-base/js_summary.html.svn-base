@@ -1,0 +1,46 @@
+<div id="summary">
+	<select class="collectionlist"></select>
+	<div class="new_collection">New Collection</div>
+		
+	<div class="canvas">
+		<div class="tabs">
+			<div class="timesheets">Timesheets</div>
+			<div class="details">Collection Details</div>
+			<div class="delete">Delete Collection</div>
+		</div>
+		
+		<div class="content visible">
+			<div class="timesheets">
+				<ul id="summary_list">
+		
+				</ul>
+				<div id="bu_newproject">New Timesheet</div>
+			</div>
+			
+			<div class="details hidden" style="display:none">
+				<table>
+					<tr>
+						<td>Name:</td>
+						<td><input type="text" value="" id="c_name" /></td>
+					</tr>
+					<tr>
+						<td>Info:</td>
+						<td><textarea id="c_info" style="height:100px;"></textarea><br></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><div class="update button">update</div></td>
+					</tr>
+				 </table>
+			</div>
+			
+			<div class="delete hidden">
+				<div style="padding:20px">
+					Delete this Timesheet Collection? All Timesheets will be lost!!!<br /><br />
+					<input type="checkbox" id="collection_delete_confirm" /> Yes pleeze!<br />
+					<div id="bu_delete" class="button" onclick="currentcollection.obliterate();">Delete</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,46 @@
+/**
+ * Bugreport Window
+ * 
+ * This plugins adds a bug report window to the timemachine
+ * 
+ * @author flobo <bosselmann@gmail.com>
+ * 
+ */
+var plugin_bugreport = {
+	
+		
+	events:function(fnc, param) {
+		if(fnc === 'topmenu.show') { 
+			$('topmenu').innerHTML += '<div> | </div><div style="background-image:url(plugins/bugreport/bug.gif); height:15px; width:15px; margin-top:6px;" id="bugreport"></div>';
+			$('bugreport').onclick = function () {
+				var win = new Modal({
+					width:400,
+					height:400
+				});
+				
+				j.request('plugin_bugreport:loadWindow','',function(res) {
+					$('floating_content').innerHTML = res;
+					$('br_submit').onclick=function() {
+						if($('br_report').value != '') {
+							$('br_status').innerHTML = 'sending ...';
+							j.request('plugin_bugreport:submit',{
+								type:$('br_type').value,
+								report:$('br_report').value
+							},
+							function (res) {
+								if(res) {
+									$('br_status').innerHTML = res;
+								} else {
+									$('br_status').innerHTML = 'Thank you! ;-)';
+									setTimeout(function() { win.close(); }, 1800);
+								}
+							});
+						} else {
+							$('br_status').innerHTML = 'You are not quite talky, please give us at least a few words.';
+						}
+					};
+				});
+			};
+		}
+	}
+};

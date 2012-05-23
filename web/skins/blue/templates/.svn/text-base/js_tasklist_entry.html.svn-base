@@ -1,0 +1,14 @@
+{if !asNode}<div id="row_${task_id}" class="t_row ${rowclass}">{/if}
+
+ <input class="c1" type="text" id="${task_id}_t_feature" value="${t_feature}" />
+ <textarea class="c2" id="${task_id}_t_description" >${t_description|htmlentities}</textarea>
+ <div class="tl_right" >
+  <div class="c3" id="${task_id}_t_prio">${task_id|drawPrio:t_prio}</div>
+  <input class="c4" type="text" id="${task_id}_t_origest" value="${t_origest|s2h}" />
+  <input class="c5" type="text" id="${task_id}_t_currest" value="${t_currest|s2h}" />
+  <input class="c6" type="text" id="${task_id}_t_elapsed" value="${t_elapsed|s2h}" />
+  <div class="c7" id="${task_id}_t_remain">${t_remain|s2h}</div>
+  <div class="c10"><div class="readystat" id="hk_${task_id}" onclick="task_setReady(this);" ></div><div class="swb" id="ti_${task_id}" onclick="stopwatch.click(this);" ></div><div class="sort"></div></div>
+ </div>
+ 
+{if !asNode}</div>{/if}

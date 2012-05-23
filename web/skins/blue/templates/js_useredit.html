@@ -1,0 +1,13 @@
+<div style="width:400px;" id="preferences">
+
+<label for="p_name">Name: </label> <input type="text" name="p_name" id="p_name" value="${u_name}" />
+<label for="p_name">Email:</label> <input type="text" name="p_email" id="p_email" value="${u_email}" />
+<label for="p_name">Username:</label> <input type="text" name="p_login" id="p_login" value="${u_login}" />
+
+<div style="float:left; margin-top:20px; clear:both;"><span style="font-weight:bold; clear:both; margin-bottom:5px;">reset password:</span></div>
+
+<label for="p_name">password:</label><input type="password" name="p_password_new" id="p_password_new" value="" />
+<label for="p_name">retype password:</label><input type="password" name="p_password_retype" id="p_password_retype" value="" />
+<input type="button" class="button" name="save" value="update" style="clear:both; margin-top:18px; float:left;" onclick="user.save();" />
+<div id="response" style="margin-top:20px; float:left; clear:both;"></div>
+</div>

@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session
+END
+adodb-compress-gzip.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-compress-gzip.php
+END
+adodb-sessions.mysql.sql
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-sessions.mysql.sql
+END
+adodb-session.php
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-session.php
+END
+adodb-cryptsession.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-cryptsession.php
+END
+session_schema.xml
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/session_schema.xml
+END
+adodb-encrypt-secret.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-encrypt-secret.php
+END
+adodb-encrypt-md5.php
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-encrypt-md5.php
+END
+adodb-encrypt-ordcrypt.php
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-encrypt-ordcrypt.php
+END
+adodb-encrypt-sha1.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-encrypt-sha1.php
+END
+adodb-compress-bzip2.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-compress-bzip2.php
+END
+adodb-encrypt-mcrypt.php
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/session/adodb-encrypt-mcrypt.php
+END

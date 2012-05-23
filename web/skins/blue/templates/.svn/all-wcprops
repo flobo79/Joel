@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/36/trunk/joel/web/skins/blue/templates
+END
+js_new_collection.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/33/trunk/joel/web/skins/blue/templates/js_new_collection.html
+END
+js_login.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/33/trunk/joel/web/skins/blue/templates/js_login.html
+END
+js_tasktable.html
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/33/trunk/joel/web/skins/blue/templates/js_tasktable.html
+END
+js_summary.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/33/trunk/joel/web/skins/blue/templates/js_summary.html
+END
+js_new_timesheet.html
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/33/trunk/joel/web/skins/blue/templates/js_new_timesheet.html
+END
+index.php
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/36/trunk/joel/web/skins/blue/templates/index.php
+END
+js_tasklist_entry.html
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/33/trunk/joel/web/skins/blue/templates/js_tasklist_entry.html
+END
+js_useredit.html
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/33/trunk/joel/web/skins/blue/templates/js_useredit.html
+END

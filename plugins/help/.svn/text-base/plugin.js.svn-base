@@ -1,0 +1,44 @@
+/**
+ * Help
+ * 
+ * adds an input form into the head of a tasklist to filter the tasklist
+ * 
+ * @author flobo <bosselmann@gmail.com>
+ * 
+ */
+var plugin_help = {
+	events:function(f,p) {
+		var parent = this;
+		if(f === 'topmenu.show') { 
+			var helpbutton = new Element('div',{
+				id:"button_help",
+				html:'| ?',
+			    events: {
+			        'click': function () { 
+			        	var floater = new Modal({
+							width:600,
+							height:400,
+							windowtitle:'Joel Help',
+							content:''
+						});
+						
+						j.request('plugin_help:load',{context:'start'}, function(response) { 
+							$('floating_content').innerHTML = response;
+							$$('#help_topics li').each(function(e) {
+								e.onclick = function(){
+									parent.showTopic(e);
+								}
+							});
+						});
+			        }
+			     }
+			}).inject($('topmenu'), 'bottom');
+		}
+	},
+	
+	showTopic:function(li) {
+		$$('#help_topics li').each(function(e) { });
+		$$('#help_contents>div').each(function(e,i) { e.style.display='none';} );
+		$('help_'+li.get('name')).setStyles({display:'block',opacity:0}).fade('in');
+	}
+}

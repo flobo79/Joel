@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/generic_modules
+END
+menu_module.inc
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/generic_modules/menu_module.inc
+END
+object_module.inc
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/generic_modules/object_module.inc
+END
+adodblite_module.inc
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/generic_modules/adodblite_module.inc
+END
+pear_module.inc
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/33/trunk/joel/app/library/adodb_lite/generic_modules/pear_module.inc
+END

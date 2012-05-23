@@ -1,0 +1,24 @@
+#tasklist_filter_box {
+float:right;
+width:70px;
+margin:4px 20px 5px 10px;
+height:14px;
+font-size:11px;
+}
+
+#tasklist_filter_input {
+padding:2px;
+width:100px;
+display:none;
+margin-top:-1px;
+height:14px;
+}
+
+#tasklist_filter_button {
+background: transparent url(../gfx/mag.gif) no-repeat scroll 1px 3px;
+padding:2px;
+padding-left:15px;
+width:70px;
+margin-top:-1px;
+cursor:pointer;
+}

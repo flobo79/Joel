@@ -1,0 +1,33 @@
+<?php
+
+class Locale {
+	public $locale = DEFAULT_LOCALE;
+	public $catalogue = array();
+	
+	function Locale($catalogue) {
+		if($_SESSION['joel']->user) {
+			$this->locale = $_SESSION['joel']->user->u_locale;
+			$this->loadCatalogue($catalogue);
+		}	
+	}
+	
+	public function str($str) {
+		return (string) ($translated = $this->catalogue[$str]) ? $translated : $str;
+	}
+	
+	private function loadCatalogue($locale) {
+		
+		if (($handle = fopen(LOCALE."/".$this->locale."/".ucfirst($locale).".csv", "r")) !== FALSE) {
+		    $cataloge = array();
+			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+		        $catalogue[$data[0]] = $data[1];
+		    }
+		    fclose($handle);
+		    
+		    $this->catalogue = $catalogue;
+		}
+	}
+}
+
+
+?>

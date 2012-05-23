@@ -1,0 +1,66 @@
+/**
+ * Admin Panel
+ * 
+ */
+var plugin_admin = {
+	name:'plugin_admin',
+	
+	events:function(fnc, param) {
+		if(fnc === 'topmenu.show') { 
+			if(j.user.loggedIn) {
+				var adminmenu = new Element('div', {
+					id:"bu_admin", 
+					html:' | admin'
+				});
+				
+				adminmenu.inject('projecttitle', 'after');
+				// info: for some reason, adding the onclick action to the object at creation didnt work
+				adminmenu.onclick=function() {
+					this.open();
+				}
+			}
+		}
+	},
+	
+	open:function () {
+		var parent = plugins.plugin_admin;
+		parent.win = new Modal({
+			windowtitle:'Admin',
+			width: 700,
+			height: 400
+		});
+		
+		j.request('plugin_admin:load', '', function(res){
+			
+			$('floating_content').innerHTML = res;
+			parent.admin = new class_admin();
+			
+			
+			/*
+			$('br_submit').onclick = function(){
+				if ($('br_report').value != '') {
+					$('br_status').innerHTML = 'sending ...';
+					j.request('plugin_bugreport:submit', {
+						type: $('br_type').value,
+						report: $('br_report').value
+					}, function(res){
+						if (res) {
+							$('br_status').innerHTML = res;
+						}
+						else {
+							$('br_status').innerHTML = 'Thank you! ;-)';
+							setTimeout(function(){
+								win.close();
+							}, 1800);
+						}
+					});
+					
+				}
+				else {
+					$('br_status').innerHTML = 'You are not quite talky, please give us at least a few words.';
+				}
+			}
+			*/
+		},false,false,true);
+	}
+};

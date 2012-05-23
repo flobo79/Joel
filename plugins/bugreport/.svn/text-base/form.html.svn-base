@@ -1,0 +1,14 @@
+<h1>Thank you very much for reporting a bug or suggesting a feature.</h1>
+Type of inquery: 
+<select id="br_type">
+	<option value="Bugreport">Bug Report</option>
+	<option value="Feature Request">Feature Request</option>
+</select>
+<br>
+<br>
+Please give us a detailed description. If you are reporting a bug, please give us also detailed information about
+your environment (Browser, OS, Versions), how to reproduce the error, what you expected to see and what you saw instead:
+<textarea id="br_report" style="width:100%; height:80px;"></textarea>
+<br><br>
+<input type="button" class="button" id="br_submit" value="submit" /><br><br>
+<div id="br_status"></div>
